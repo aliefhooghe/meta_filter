@@ -32,35 +32,18 @@ struct evaluate_impl<constant<T>> {
     }
 };
 
-template <typename E1, typename E2>
-struct evaluate_impl<operation<sum_operation, E1, E2>> {
-    static constexpr auto eval(const operation<sum_operation, E1, E2>& e)
+template <typename Operator, typename E1, typename E2>
+struct evaluate_impl<operation<Operator, E1, E2>> {
+    static constexpr auto eval(const operation<Operator, E1, E2>& e)
     {
-        return evaluate(e.operand1) + evaluate(e.operand2);
-    }
-};
-
-template <typename E1, typename E2>
-struct evaluate_impl<operation<product_operation, E1, E2>> {
-    static constexpr auto eval(const operation<product_operation, E1, E2>& e)
-    {
-        return evaluate(e.operand1) * evaluate(e.operand2);
-    }
-};
-
-template <typename E1, typename E2>
-struct evaluate_impl<operation<frac_operation, E1, E2>> {
-    static constexpr auto eval(const operation<frac_operation, E1, E2>& e)
-    {
-        return evaluate(e.operand1) / evaluate(e.operand2);
-    }
-};
-
-template <typename E1, typename E2>
-struct evaluate_impl<operation<sub_operation, E1, E2>> {
-    static constexpr auto eval(const operation<sub_operation, E1, E2>& e)
-    {
-        return evaluate(e.operand1) - evaluate(e.operand2);
+        if constexpr (std::is_same_v<Operator, sum_operation>)
+            return evaluate(e.operand1) + evaluate(e.operand2);
+        else if constexpr (std::is_same_v<Operator, sub_operation>)
+            return evaluate(e.operand1) - evaluate(e.operand2);
+        else if constexpr (std::is_same_v<Operator, product_operation>)
+            return evaluate(e.operand1) * evaluate(e.operand2);
+        else if constexpr (std::is_same_v<Operator, frac_operation>)
+            return evaluate(e.operand1) / evaluate(e.operand2);
     }
 };
 

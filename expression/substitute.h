@@ -7,7 +7,7 @@ template <typename E1, typename E2, typename SearchTag>
 struct substitute_impl;
 
 template <typename E1, typename E2, typename SearchTag>
-auto substitute(
+constexpr auto substitute(
     const expression<E1>& e,
     const variable<SearchTag>& var,
     const expression<E2>& substitut)
@@ -16,7 +16,7 @@ auto substitute(
 }
 
 template <typename E1, typename T, typename SearchTag, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
-auto substitute(
+constexpr auto substitute(
     const expression<E1>& e,
     const variable<SearchTag>& var,
     T value)

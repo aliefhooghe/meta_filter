@@ -4,6 +4,10 @@
 #include "expression.h"
 #include <ostream>
 
+/*
+ *  Print expression 
+ */
+
 template <typename E>
 struct print_impl;
 
@@ -84,5 +88,6 @@ constexpr decltype(auto) operator<< (std::ostream& stream, const expression<E>& 
 {
     return print(e, stream); 
 }
+
 
 #endif /* PRINT_H_ */

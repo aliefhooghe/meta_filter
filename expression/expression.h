@@ -10,7 +10,6 @@
 template <typename E>
 struct expression
 {
-
     constexpr operator const E&() const
     {
         return *static_cast<const E*>(this);

@@ -1,27 +1,25 @@
 #include <iostream>
 
-#include "expression/expression.h"
-#include "expression/evaluate.h"
-#include "expression/substitute.h"
-#include "expression/print.h"
-
-#include "bilinear_transform/polynomial.h"
+#include "bilinear_transform/bilinear_transform.h"
 
 int main()
 {
-    variable<int> a;
-    variable<float> b;
-    variable<char> c;
+    const auto integrator_laplace = 1/s;
 
-    auto p1 = polynomial{a, b, c};
-    auto p2 = polynomial{a+1, a};
+    constexpr auto bilinear_transform_approximation = 
+        (2 * (Z - 1)) / 
+        (T * (Z + 1));
+    
+    const auto first_order_approx_z_transform = 
+        substitute(integrator_laplace, s, bilinear_transform_approximation);
 
-    auto p3 = p1 + p2;
+    const auto z_transform = 
+        extract_rational_fraction(first_order_approx_z_transform, Z); 
 
-    std::cout << p1 << std::endl;;
-    std::cout << p2 << std::endl;;
-    std::cout << p3 << std::endl;;
- 
+    std::cout << "transf(" << integrator_laplace << ") :\n" <<
+                 "substitute : " << first_order_approx_z_transform << 
+                 "\nextract frac" << z_transform << std::endl;
+
     return 0;
 }
 
