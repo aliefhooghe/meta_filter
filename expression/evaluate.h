@@ -16,19 +16,20 @@ auto evaluate(const expression<E>& e)
     return evaluate_impl<E>::eval(e);
 }
 
-template <typename Tag>
-struct evaluate_impl<variable<Tag>> {
-    static constexpr auto eval(const variable<Tag>&)
-    {
-        return 1;
-    }
-};
 
 template <typename T>
 struct evaluate_impl<constant<T>> {
     static constexpr auto eval(const constant<T>& cst)
     {
         return cst.value;
+    }
+};
+
+template <typename T, T Value>
+struct evaluate_impl<constexpr_constant<T, Value>> {
+    static constexpr auto eval(const constexpr_constant<T, Value>&)
+    {
+        return Value;
     }
 };
 

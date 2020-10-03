@@ -152,7 +152,7 @@ struct extract_rational_fraction_impl<variable<Tag>, SearchTag>
     static constexpr auto extract(const variable<Tag>& var, const variable<SearchTag>&)
     {
         if constexpr (std::is_same_v<Tag, SearchTag>)
-            return polynomial{constant{0}, constant{1}};
+            return polynomial{constexpr_constant<int, 0>{}, constexpr_constant<int, 1>{}};
         else
             return polynomial{var};
     }
@@ -162,6 +162,15 @@ template <typename T, typename SearchTag>
 struct extract_rational_fraction_impl<constant<T>, SearchTag>
 {
     static constexpr auto extract(const constant<T>& cst, const variable<SearchTag>&)
+    {
+        return polynomial{cst};
+    }
+};
+
+template <typename T, T Value, typename SearchTag>
+struct extract_rational_fraction_impl<constexpr_constant<T, Value>, SearchTag>
+{
+    static constexpr auto extract(const constexpr_constant<T, Value>& cst, const variable<SearchTag>&)
     {
         return polynomial{cst};
     }

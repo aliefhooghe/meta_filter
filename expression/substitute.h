@@ -42,8 +42,19 @@ template <typename T, typename E, typename SearchTag>
 struct substitute_impl<constant<T>, E, SearchTag> {
     static constexpr auto subst(
         const constant<T>& cst,
-        const variable<SearchTag>& var,
-        const expression<E>& substitut)
+        const variable<SearchTag>&,
+        const expression<E>&)
+    {
+        return cst;
+    }
+};
+
+template <typename T, T Value, typename E, typename SearchTag>
+struct substitute_impl<constexpr_constant<T, Value>, E, SearchTag> {
+    static constexpr auto subst(
+        const constexpr_constant<T, Value>& cst,
+        const variable<SearchTag>&,
+        const expression<E>&)
     {
         return cst;
     }

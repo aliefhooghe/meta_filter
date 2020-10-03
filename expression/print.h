@@ -21,7 +21,7 @@ template <typename Tag>
 struct print_impl<variable<Tag>> {
     static constexpr decltype(auto) print(const variable<Tag>&, std::ostream& stream)
     {
-        return stream << "var";
+        return stream << "Var";
     }
 };
 
@@ -30,6 +30,14 @@ struct print_impl<constant<T>> {
     static constexpr decltype(auto) print(const constant<T>& cst, std::ostream& stream)
     {
         return stream << cst.value;
+    }
+};
+
+template <typename T, T Value>
+struct print_impl<constexpr_constant<T, Value>> {
+    static constexpr decltype(auto) print(const constexpr_constant<T, Value>&, std::ostream& stream)
+    {
+        return stream << Value;
     }
 };
 
