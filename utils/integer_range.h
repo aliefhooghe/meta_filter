@@ -4,7 +4,7 @@
 #include <utility>
 
 /*
- *  integer_sequence_cat 
+ *  integer_sequence_cat : integer_sequence concatenations 
  */
 
 template <typename Seq1, typename Seq2>
@@ -22,7 +22,7 @@ struct integer_sequence_cat_impl<std::integer_sequence<T, I1s...>, std::integer_
 };
 
 /*
- *  integer_range_impl 
+ *  integer_range_impl : integer_range_t<T, Begin, End>
  */
 
 template <typename T, T Begin, T End>

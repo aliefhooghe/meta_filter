@@ -6,9 +6,8 @@
 #include <algorithm>
 
 #include "../expression/expression.h"
-#include "../expression/utils.h"
 #include "../expression/print.h"
-#include "utils.h"
+#include "../utils/integer_range.h"
 
 template <typename ...E>
 struct polynomial

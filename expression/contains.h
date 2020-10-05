@@ -1,5 +1,5 @@
-#ifndef UTILS_H_
-#define UTILS_H_
+#ifndef CONTAINS_H_
+#define CONTAINS_H_
 
 #include "expression.h"
 
