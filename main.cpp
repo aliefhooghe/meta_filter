@@ -1,25 +1,32 @@
+
+
 #include <iostream>
 
-#include "bilinear_transform/bilinear_transform.h"
+#include "meta_filter.h"
 
-int main()
+int main(void)
 {
-    const auto integrator_laplace = 1/s;
+    struct tau_tag;
+    constexpr auto tau = variable<tau_tag>{}; // tau = RC
 
-    constexpr auto bilinear_transform_approximation = 
-        (2 * (Z - 1)) / 
-        (T * (Z + 1));
-    
-    const auto first_order_approx_z_transform = 
-        substitute(integrator_laplace, s, bilinear_transform_approximation);
+    auto filter = make_filter<float>(1/(1 + tau * s));
 
-    const auto z_transform = 
-        extract_rational_fraction(first_order_approx_z_transform, Z); 
+    filter.set_variable(T, 1.f);
+    filter.set_variable(tau, 20.f);
 
-    std::cout << "transf(" << integrator_laplace << ") :\n" <<
-                 "substitute : " << first_order_approx_z_transform << 
-                 "\nextract frac" << z_transform << std::endl;
+    for (auto i = 0; i < 100; i++) {
+        const auto out = filter.process_one_sample(i < 50 ? 1.f : 0.f);
 
-    return 0;
+        const auto len = static_cast<int>(100.0f * out);
+        for (auto j = 0; j < len; ++j)
+            std::cout << "|";
+        std::cout << std::endl;
+    }
+
+    const auto out = filter.process_one_sample(0.0);
+
+
+    //  out is not optimized away
+    return (out < 0.2321);
 }
 

@@ -179,21 +179,21 @@ struct extract_rational_fraction_impl<constexpr_constant<T, Value>, SearchTag>
 template <typename Operator, typename E1, typename E2, typename SearchTag>
 struct extract_rational_fraction_impl<operation<Operator, E1, E2>, SearchTag>
 {
-        static constexpr auto extract(const operation<Operator, E1, E2>& op, const variable<SearchTag>& var)
-        {
-            if constexpr (std::is_same_v<Operator, sum_operation>)
-                return extract_rational_fraction(op.operand1, var) +
-                    extract_rational_fraction(op.operand2, var);
-            else if constexpr (std::is_same_v<Operator, sub_operation>)
-                return extract_rational_fraction(op.operand1, var) -
-                    extract_rational_fraction(op.operand2, var);
-            else if constexpr (std::is_same_v<Operator, product_operation>)
-                return extract_rational_fraction(op.operand1, var) *
-                    extract_rational_fraction(op.operand2, var);
-            else if constexpr (std::is_same_v<Operator, frac_operation>)
-                return extract_rational_fraction(op.operand1, var) /
-                    extract_rational_fraction(op.operand2, var);
-        }
+    static constexpr auto extract(const operation<Operator, E1, E2>& op, const variable<SearchTag>& var)
+    {
+        if constexpr (std::is_same_v<Operator, sum_operation>)
+            return extract_rational_fraction(op.operand1, var) +
+                extract_rational_fraction(op.operand2, var);
+        else if constexpr (std::is_same_v<Operator, sub_operation>)
+            return extract_rational_fraction(op.operand1, var) -
+                extract_rational_fraction(op.operand2, var);
+        else if constexpr (std::is_same_v<Operator, product_operation>)
+            return extract_rational_fraction(op.operand1, var) *
+                extract_rational_fraction(op.operand2, var);
+        else if constexpr (std::is_same_v<Operator, frac_operation>)
+            return extract_rational_fraction(op.operand1, var) /
+                extract_rational_fraction(op.operand2, var);
+    }
 };
 
 #endif

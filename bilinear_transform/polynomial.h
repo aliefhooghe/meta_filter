@@ -32,7 +32,7 @@ decltype(auto) operator<<(std::ostream& stream, const polynomial<E...>& p)
 }
 
 /*
- *  Rational fraction operators 
+ *  Polynomial operators 
  */
 
 template <typename P1, typename P2>

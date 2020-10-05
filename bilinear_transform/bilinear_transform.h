@@ -46,9 +46,9 @@ template <typename E>
 constexpr auto bilinear_transform(const expression<E>& laplace_transfert_function)
 {
     constexpr auto bilinear_transform_approximation = 
-        (2 * (Z - 1)) / 
-        (T * (Z + 1));
-    
+        (constexpr_constant<int, 2>{} * (Z - constexpr_constant<int, 1>{})) / 
+        (T                            * (Z + constexpr_constant<int, 1>{}));
+
     const auto first_order_approx_z_transform = 
         substitute(laplace_transfert_function, s, bilinear_transform_approximation);
 
